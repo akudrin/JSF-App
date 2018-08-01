@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+        <title>Add Student</title>
+
+        <h:outputStylesheet library="css" name="style.css"  />
+        <h:outputStylesheet library="css" name="add-student-style.css"  />
+
+    </h:head>
+
+    <h:body>
+
+        <div id="wrapper">
+            <div id="header">
+                <h2>FooBar University</h2>
+            </div>
+        </div>
+
+        <div id="container">
+            <h3>Add Student</h3>
+
+            <h:messages globalOnly="true" />
+
+            <h:form id="form" style="margin-top: 10px;" >
+                <h:panelGrid columns="3">
+
+                    <h:outputLabel>First name:</h:outputLabel> <h:inputText value="#{student.firstName}" id="firstName" required="true"
+                                                                            requiredMessage="Your Name is mandatory."/> <h:message for="firstName" styleClass="error"/>
+
+                    <h:outputLabel>Last name:</h:outputLabel> <h:inputText value="#{student.lastName}" id="lastName" required="true"
+                                                                           requiredMessage="Your Surname is mandatory."/> <h:message for="lastName" styleClass="error"/>
+                    <h:outputLabel>Phone number:</h:outputLabel> <h:inputText value="#{student.phoneNumber}" id="phoneNumber" required="true"
+                                                                              requiredMessage="Your Phone Number is mandatory." validatorMessage="Phone number must follow xxxx-xxx-xxx"> 
+                        <f:validateRegex pattern="\d{4}-\d{3}-\d{3}" />
+                    </h:inputText> <h:message for="phoneNumber" styleClass="error"/>
+
+                    <h:outputLabel>Email:</h:outputLabel> <h:inputText value="#{student.email}" id="email" 
+                                                                       required="true"
+                                                                       requiredMessage="Your email is mandatory."
+                                                                       validatorMessage="#{student.email} is not valid email"> <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+                        <!-- to update the above Regex to make the valid domains only : .com,.net, .org, .edu
+                                   use this <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.(com|net|‌​org|edu)"/> -->
+                    </h:inputText>	
+                    <h:message for="email" styleClass="error"/>
+                    <h:outputLabel>Course code:</h:outputLabel> <h:inputText value="#{student.courseCode}" id="courseCode" required="true"
+                                                                             requiredMessage="Your Course Code is mandatory." validator="#{student.validateTheCourseCode}"/> <h:message for="courseCode" styleClass="error"/>
+                    <h:outputLabel>Postcode:</h:outputLabel> <h:inputText value="#{student.postalCode}" id="postalCode" 
+                                                                          required="true"
+                                                                          requiredMessage="Your postcode is mandatory."> <f:validateLength minimum="6" maximum="8" /> </h:inputText>
+                    <h:message for="postalCode" styleClass="error"/>
+
+                    <h:outputLabel /> <h:commandButton value="Save" styleClass="save" action="#{studentController.addStudent(student)}"/>
+
+                </h:panelGrid>
+            </h:form>
+
+            <div style="clear: both;"></div>
+
+            <p><h:outputLink value="list-students.xhtml">Back to List</h:outputLink></p>
+
+        </div>	
+    </h:body>
+</html>
